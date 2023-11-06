@@ -462,9 +462,13 @@ int main(int argc, char *argv[]){
       numericSort = true;
     } else if (strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0) {
       version = true;
-      printf("pstree (GNU coreutils) 0,1\n");
+      printf("pstree (GNU coreutils) 0.1\n");
       return 0;
     }
+  }
+  if (version){
+    printf("pstree (GNU coreutils) 0.1\n");
+    return 0;
   }
   buildAndPrint(NULL, showPids, numericSort);
   // assert(!argv[argc]);
