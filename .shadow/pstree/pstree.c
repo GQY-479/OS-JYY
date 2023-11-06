@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include "test.h"
 // pstree
 // 2.2 描述
 // 把系统中的进程按照父亲-孩子的树状结构打印到终端。
