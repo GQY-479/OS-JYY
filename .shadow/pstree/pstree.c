@@ -449,6 +449,7 @@ int main(int argc, char *argv[]){
   // -n 或 --numeric-sort: 按照pid的数值从小到大顺序输出一个进程的直接孩子。
   // -V 或 --version: 打印版本信息。
   //得到命令行的参数，根据要求设置标志变量的数值
+  hi();
   bool showPids = false;
   bool numericSort = false;
   bool version = false;
