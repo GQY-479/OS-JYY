@@ -7,6 +7,7 @@
 
 static int w, h;  // Screen size
 
+// Define a macro to map keycodes to key names
 #define KEYNAME(key) \
   [AM_KEY_##key] = #key,
 static const char *key_names[] = { AM_KEYS(KEYNAME) };
@@ -15,12 +16,23 @@ static inline void puts(const char *s) {
   for (; *s; s++) putch(*s);
 }
 
+// This function prints the key that was pressed on the keyboard
 void print_key() {
+  // Create an instance of the AM_INPUT_KEYBRD_T struct and initialize the keycode to AM_KEY_NONE
   AM_INPUT_KEYBRD_T event = { .keycode = AM_KEY_NONE };
+  
+  // Read the keyboard input and store it in the event struct
   ioe_read(AM_INPUT_KEYBRD, &event);
+  
+  // Check if a key was pressed and if it is a keydown event
   if (event.keycode != AM_KEY_NONE && event.keydown) {
+    // Print a message indicating that a key was pressed
     puts("Key pressed: ");
+    
+    // Print the name of the key that was pressed using the key_names array
     puts(key_names[event.keycode]);
+    
+    // Print a newline character
     puts("\n");
   }
 }
