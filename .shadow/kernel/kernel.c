@@ -94,9 +94,9 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
       int original_y = (int)((h-y-1) / scale_y);
 
       // Get the RGB values from the original image data
-      unsigned char b = image_data[(original_y * image_width + original_x) * pixel_size];
+      unsigned char r = image_data[(original_y * image_width + original_x) * pixel_size];
       unsigned char g = image_data[(original_y * image_width + original_x) * pixel_size + 1];
-      unsigned char r = image_data[(original_y * image_width + original_x) * pixel_size + 2];
+      unsigned char b = image_data[(original_y * image_width + original_x) * pixel_size + 2];
 
       // Combine the RGB values into a single color value
       uint32_t color = (r << 16) | (g << 8) | b;
