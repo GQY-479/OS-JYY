@@ -43,6 +43,7 @@ void print_key() {
   }
 }
 
+// draw a tile(w*h) with color
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // WARNING: large stack-allocated memory
   AM_GPU_FBDRAW_T event = {
@@ -72,7 +73,7 @@ void splash() {
 
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
   // Assuming a pixel is represented by 3 bytes (RGB), adjust accordingly if needed
-  int pixel_size = 4;
+  int pixel_size = 3;
   
   // Convert the image data to pixel data
   for (int y = 0; y < image_height; y++) {
@@ -115,3 +116,21 @@ int main(const char *args) {
   }
   return 0;
 }
+
+
+// // Operating system is a C program!
+// int main(const char *args) {
+//   ioe_init();
+
+//   puts("mainargs = \"");
+//   puts(args);  // make run mainargs=xxx
+//   puts("\"\n");
+
+//   splash();
+
+//   puts("Press any key to see its key code...\n");
+//   while (1) {
+//     print_key();
+//   }
+//   return 0;
+// }
