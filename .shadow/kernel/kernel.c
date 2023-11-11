@@ -4,7 +4,7 @@
 #include <klib-macros.h>
 #include "image_data.h"
 
-#define SIDE 16
+#define SIDE 1
 
 static int w, h;  // Screen size
 
@@ -55,42 +55,68 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   ioe_write(AM_GPU_FBDRAW, &event);
 }
 
-void splash() {
-  AM_GPU_CONFIG_T info = {0};
-  ioe_read(AM_GPU_CONFIG, &info);
-  w = info.width;
-  h = info.height;
+// void splash() {
+//   AM_GPU_CONFIG_T info = {0};
+//   ioe_read(AM_GPU_CONFIG, &info);
+//   w = info.width;
+//   h = info.height;
 
-  for (int x = 0; x * SIDE <= w; x ++) {
-    for (int y = 0; y * SIDE <= h; y++) {
-      if ((x & 1) ^ (y & 1)) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
-      }
-    }
-  }
-}
+//   for (int x = 0; x * SIDE <= w; x ++) {
+//     for (int y = 0; y * SIDE <= h; y++) {
+//       if ((x & 1) ^ (y & 1)) {
+//         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
+//       }
+//     }
+//   }
+// }
 
-void draw_image(const unsigned char* image_data, int image_width, int image_height, int x, int y) {
-  // Assuming a pixel is represented by 4 bytes (RGBA), adjust accordingly if needed
-  int pixel_size = 4;
+   void splash() {
+     AM_GPU_CONFIG_T info = {0};
+     ioe_read(AM_GPU_CONFIG, &info);
+     w = info.width;
+     h = info.height;
+     int image_width = 2268;
+     int image_height = 1280;
+
+     // Calculate the scaling factors for width and height
+     float scale_width = (float)w / image_width;
+     float scale_height = (float)h / image_height;
+
+     for (int x = 0; x < w; x++) {
+       for (int y = 0; y < h; y++) {
+         // Calculate the corresponding pixel position in the image
+         int image_x = (int)(x / scale_width);
+         int image_y = (int)(y / scale_height);
+
+         // Get the RGB pixel value from the image array
+         unsigned char r = hair_flowing[(image_y * image_width + image_x) * 3];
+         unsigned char g = hair_flowing[(image_y * image_width + image_x) * 3 + 1];
+         unsigned char b = hair_flowing[(image_y * image_width + image_x) * 3 + 2];
+
+         // Combine the RGB values into a single color value
+         uint32_t color = (r << 16) | (g << 8) | b;
+
+         // Draw the pixel on the screen
+         draw_tile(x, y, 1, 1, color);
+       }
+     }
+   }
+
+// void draw_image(const unsigned char* image_data, int image_width, int image_height, int x, int y) {
+//   // Assuming a pixel is represented by 4 bytes (RGBA), adjust accordingly if needed
+//   int pixel_size = 4;
   
-  // Create an array to store pixel data
-  uint32_t pixels[image_width * image_height];
+//   // Create an array to store pixel data
+//   uint32_t pixels[image_width * image_height];
 
-  // Convert the image data to pixel data
-  for (int i = 0; i < image_width * image_height; i++) {
-    pixels[i] = (image_data[i * pixel_size] << 16) | (image_data[i * pixel_size + 1] << 8) | image_data[i * pixel_size + 2];
-  }
+//   // Convert the image data to pixel data
+//   for (int i = 0; i < image_width * image_height; i++) {
+//     pixels[i] = (image_data[i * pixel_size] << 16) | (image_data[i * pixel_size + 1] << 8) | image_data[i * pixel_size + 2];
 
-  // Create an instance of the AM_GPU_FBDRAW_T struct
-  AM_GPU_FBDRAW_T event = {
-    .x = x, .y = y, .w = image_width, .h = image_height, .sync = 1,
-    .pixels = pixels,
-  };
+//   }
 
-  // Draw the image on the screen
-  ioe_write(AM_GPU_FBDRAW, &event);
-}
+
+// }
 
 
 // Operating system is a C program!
@@ -101,8 +127,8 @@ int main(const char *args) {
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
 
-  // splash();
-  draw_image(hair_flowing, SIDE, SIDE, 100, 100);
+  splash();
+  // draw_image(hair_flowing, SIDE, SIDE, 100, 100);
 
   puts("Press any key to see its key code...\n");
   while (1) {
