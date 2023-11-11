@@ -2,8 +2,9 @@
 #include <amdev.h>
 #include <klib.h>
 #include <klib-macros.h>
+#include "image_data.h"
 
-#define SIDE 4
+#define SIDE 16
 
 static int w, h;  // Screen size
 
@@ -59,8 +60,6 @@ void splash() {
   ioe_read(AM_GPU_CONFIG, &info);
   w = info.width;
   h = info.height;
-  // w = 400;
-  // h = 300;
 
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
@@ -71,6 +70,29 @@ void splash() {
   }
 }
 
+void draw_image(const unsigned char* image_data, int image_width, int image_height, int x, int y) {
+  // Assuming a pixel is represented by 4 bytes (RGBA), adjust accordingly if needed
+  int pixel_size = 4;
+  
+  // Create an array to store pixel data
+  uint32_t pixels[image_width * image_height];
+
+  // Convert the image data to pixel data
+  for (int i = 0; i < image_width * image_height; i++) {
+    pixels[i] = (image_data[i * pixel_size] << 16) | (image_data[i * pixel_size + 1] << 8) | image_data[i * pixel_size + 2];
+  }
+
+  // Create an instance of the AM_GPU_FBDRAW_T struct
+  AM_GPU_FBDRAW_T event = {
+    .x = x, .y = y, .w = image_width, .h = image_height, .sync = 1,
+    .pixels = pixels,
+  };
+
+  // Draw the image on the screen
+  ioe_write(AM_GPU_FBDRAW, &event);
+}
+
+
 // Operating system is a C program!
 int main(const char *args) {
   ioe_init();
@@ -79,7 +101,8 @@ int main(const char *args) {
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
 
-  splash();
+  // splash();
+  draw_image(hair_flowing, SIDE, SIDE, 100, 100);
 
   puts("Press any key to see its key code...\n");
   while (1) {
