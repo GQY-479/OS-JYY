@@ -3,7 +3,7 @@
 #include <klib.h>
 #include <klib-macros.h>
 
-#define SIDE 16
+#define SIDE 4
 
 static int w, h;  // Screen size
 
@@ -59,8 +59,8 @@ void splash() {
   ioe_read(AM_GPU_CONFIG, &info);
   w = info.width;
   h = info.height;
-  w = 400;
-  h = 300;
+  // w = 400;
+  // h = 300;
 
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
