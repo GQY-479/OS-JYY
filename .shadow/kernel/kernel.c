@@ -65,12 +65,15 @@ void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       if ((x & 1) ^ (y & 1)) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffd8ff); // white
       }
     }
   }
 }
 
+// The (0,0) is at the top-left corner of the screen
+// and the order of rgb is actually bgr
+// This function decodes a BMP image into raw RGB data
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
   AM_GPU_CONFIG_T info = {0};
   ioe_read(AM_GPU_CONFIG, &info);
@@ -91,9 +94,9 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
       int original_y = (int)((h-y-1) / scale_y);
 
       // Get the RGB values from the original image data
-      unsigned char r = image_data[(original_y * image_width + original_x) * pixel_size];
+      unsigned char b = image_data[(original_y * image_width + original_x) * pixel_size];
       unsigned char g = image_data[(original_y * image_width + original_x) * pixel_size + 1];
-      unsigned char b = image_data[(original_y * image_width + original_x) * pixel_size + 2];
+      unsigned char r = image_data[(original_y * image_width + original_x) * pixel_size + 2];
 
       // Combine the RGB values into a single color value
       uint32_t color = (r << 16) | (g << 8) | b;
@@ -121,8 +124,9 @@ int main(const char *args) {
   int image_width = 2268;
   int image_height = 1200;
   // Draw the image
-  draw_image(image_data, image_width, image_height);
-  // splash();
+  if(0)
+    draw_image(image_data, image_width, image_height);
+  splash();
 
   puts("Press any key to see its key code...\n");
   while (1) {
