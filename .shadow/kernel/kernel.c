@@ -65,15 +65,12 @@ void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       if ((x & 1) ^ (y & 1)) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffd8ff); // white
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       }
     }
   }
 }
 
-// The (0,0) is at the top-left corner of the screen
-// and the order of rgb is actually bgr. https://blog.csdn.net/weixin_40437029/article/details/117530796
-// This function decodes a BMP image into raw RGB data
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
   AM_GPU_CONFIG_T info = {0};
   ioe_read(AM_GPU_CONFIG, &info);
@@ -124,9 +121,9 @@ int main(const char *args) {
   int image_width = 2268;
   int image_height = 1200;
   // Draw the image
-  if(0)
+  if(1)
     draw_image(image_data, image_width, image_height);
-  splash();
+  // splash();
 
   puts("Press any key to see its key code...\n");
   while (1) {
