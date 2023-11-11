@@ -84,7 +84,7 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
   float scale_y = (float)h / image_height;
 
   // Iterate over each pixel in the new grid
-  for (int y = h-1; y >= 0; y++) {
+  for (int y = h-1; y >= 0; y--) {
     for (int x = 0; x < w; x++) {
       // Calculate the corresponding pixel position in the original grid
       int original_x = (int)(x / scale_x);
