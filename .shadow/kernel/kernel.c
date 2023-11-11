@@ -35,6 +35,11 @@ void print_key() {
     // Print a newline character
     puts("\n");
   }
+
+  // Check if the ESC key was pressed and call halt() to exit
+  if (event.keycode == AM_KEY_ESCAPE) {
+    halt(1);
+  }
 }
 
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
