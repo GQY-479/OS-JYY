@@ -102,12 +102,13 @@ int main(const char *args) {
   // Decode the JPEG data into raw RGB data
   // int image_width, image_height;
   // unsigned char* image_data = decode_jpeg(hair_flowing, hair_flowing_len, &image_width, &image_height);
-  unsigned char* image_data = hair_flowing;
-  int image_width = 2268;
-  int image_height = 1200;
-  // Draw the image
-  draw_image(image_data, image_width, image_height);
-
+  // unsigned char* image_data = hair_flowing;
+  // int image_width = 2268;
+  // int image_height = 1200;
+  // // Draw the image
+  // draw_image(image_data, image_width, image_height);
+  splash();
+  
   puts("Press any key to see its key code...\n");
   while (1) {
     print_key();
