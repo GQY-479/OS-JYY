@@ -55,69 +55,41 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   ioe_write(AM_GPU_FBDRAW, &event);
 }
 
-// void splash() {
-//   AM_GPU_CONFIG_T info = {0};
-//   ioe_read(AM_GPU_CONFIG, &info);
-//   w = info.width;
-//   h = info.height;
+void splash() {
+  AM_GPU_CONFIG_T info = {0};
+  ioe_read(AM_GPU_CONFIG, &info);
+  w = info.width;
+  h = info.height;
 
-//   for (int x = 0; x * SIDE <= w; x ++) {
-//     for (int y = 0; y * SIDE <= h; y++) {
-//       if ((x & 1) ^ (y & 1)) {
-//         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
-//       }
-//     }
-//   }
-// }
+  for (int x = 0; x * SIDE <= w; x ++) {
+    for (int y = 0; y * SIDE <= h; y++) {
+      if ((x & 1) ^ (y & 1)) {
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
+      }
+    }
+  }
+}
 
-   void splash() {
-     AM_GPU_CONFIG_T info = {0};
-     ioe_read(AM_GPU_CONFIG, &info);
-     w = info.width;
-     h = info.height;
-     int image_width = 2268;
-     int image_height = 1280;
-
-     // Calculate the scaling factors for width and height
-     float scale_width = (float)w / image_width;
-     float scale_height = (float)h / image_height;
-
-     for (int x = 0; x < w; x++) {
-       for (int y = 0; y < h; y++) {
-         // Calculate the corresponding pixel position in the image
-         int image_x = (int)(x / scale_width);
-         int image_y = (int)(y / scale_height);
-
-         // Get the RGB pixel value from the image array
-         unsigned char r = hair_flowing[(image_y * image_width + image_x) * 3];
-         unsigned char g = hair_flowing[(image_y * image_width + image_x) * 3 + 1];
-         unsigned char b = hair_flowing[(image_y * image_width + image_x) * 3 + 2];
-
-         // Combine the RGB values into a single color value
-         uint32_t color = (r << 16) | (g << 8) | b;
-
-         // Draw the pixel on the screen
-         draw_tile(x, y, 1, 1, color);
-       }
-     }
-   }
-
-// void draw_image(const unsigned char* image_data, int image_width, int image_height, int x, int y) {
-//   // Assuming a pixel is represented by 4 bytes (RGBA), adjust accordingly if needed
-//   int pixel_size = 4;
+void draw_image(const unsigned char* image_data, int image_width, int image_height) {
+  // Assuming a pixel is represented by 3 bytes (RGB), adjust accordingly if needed
+  int pixel_size = 3;
   
-//   // Create an array to store pixel data
-//   uint32_t pixels[image_width * image_height];
+  // Convert the image data to pixel data
+  for (int y = 0; y < image_height; y++) {
+    for (int x = 0; x < image_width; x++) {
+      // Get the RGB values from the image data
+      unsigned char r = image_data[(y * image_width + x) * pixel_size];
+      unsigned char g = image_data[(y * image_width + x) * pixel_size + 1];
+      unsigned char b = image_data[(y * image_width + x) * pixel_size + 2];
 
-//   // Convert the image data to pixel data
-//   for (int i = 0; i < image_width * image_height; i++) {
-//     pixels[i] = (image_data[i * pixel_size] << 16) | (image_data[i * pixel_size + 1] << 8) | image_data[i * pixel_size + 2];
+      // Combine the RGB values into a single color value
+      uint32_t color = (r << 16) | (g << 8) | b;
 
-//   }
-
-
-// }
-
+      // Draw the pixel on the screen
+      draw_tile(x, y, 1, 1, color);
+    }
+  }
+}
 
 // Operating system is a C program!
 int main(const char *args) {
@@ -127,8 +99,14 @@ int main(const char *args) {
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
 
-  splash();
-  // draw_image(hair_flowing, SIDE, SIDE, 100, 100);
+  // Decode the JPEG data into raw RGB data
+  // int image_width, image_height;
+  // unsigned char* image_data = decode_jpeg(hair_flowing, hair_flowing_len, &image_width, &image_height);
+  unsigned char* image_data = hair_flowing;
+  int image_width = 2268;
+  int image_height = 1200;
+  // Draw the image
+  draw_image(image_data, image_width, image_height);
 
   puts("Press any key to see its key code...\n");
   while (1) {
