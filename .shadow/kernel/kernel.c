@@ -37,7 +37,7 @@ void print_key() {
   }
 
   // Check if the ESC key was pressed and call halt() to exit
-  if (event.keycode == AM_KEY_ESCAPE) {
+  if (event.keycode == AM_KEY_ESCAPE && event.keydown) {
     halt(1);
   }
 }
