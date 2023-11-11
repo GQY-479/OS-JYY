@@ -72,25 +72,39 @@ void splash() {
 }
 
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
-  // Assuming a pixel is represented by 3 bytes (RGB), adjust accordingly if needed
+  AM_GPU_CONFIG_T info = {0};
+  ioe_read(AM_GPU_CONFIG, &info);
+  w = info.width;
+  h = info.height;
+
   int pixel_size = 3;
-  
-  // Convert the image data to pixel data
-  for (int y = 0; y < image_height; y++) {
-    for (int x = 0; x < image_width; x++) {
-      // Get the RGB values from the image data
-      unsigned char r = image_data[(y * image_width + x) * pixel_size];
-      unsigned char g = image_data[(y * image_width + x) * pixel_size + 1];
-      unsigned char b = image_data[(y * image_width + x) * pixel_size + 2];
-      // printf("r = %d, g = %d, b = %d\n", r, g, b);
+
+  // Calculate the scaling factors
+  float scale_x = (float)w / image_width;
+  float scale_y = (float)h / image_height;
+
+  // Iterate over each pixel in the new grid
+  for (int y = 0; y < h; y++) {
+    for (int x = 0; x < w; x++) {
+      // Calculate the corresponding pixel position in the original grid
+      int original_x = (int)(x / scale_x);
+      int original_y = (int)(y / scale_y);
+
+      // Get the RGB values from the original image data
+      unsigned char r = image_data[(original_y * image_width + original_x) * pixel_size];
+      unsigned char g = image_data[(original_y * image_width + original_x) * pixel_size + 1];
+      unsigned char b = image_data[(original_y * image_width + original_x) * pixel_size + 2];
+
       // Combine the RGB values into a single color value
       uint32_t color = (r << 16) | (g << 8) | b;
-      // printf("color = %d\n", color);
+
       // Draw the pixel on the screen
       draw_tile(x, y, 1, 1, color);
     }
   }
 }
+
+
 
 // Operating system is a C program!
 int main(const char *args) {
