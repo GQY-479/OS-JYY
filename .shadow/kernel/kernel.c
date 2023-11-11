@@ -81,12 +81,12 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
       unsigned char r = image_data[(y * image_width + x) * pixel_size];
       unsigned char g = image_data[(y * image_width + x) * pixel_size + 1];
       unsigned char b = image_data[(y * image_width + x) * pixel_size + 2];
-
+      printf("r = %d, g = %d, b = %d\n", r, g, b);
       // Combine the RGB values into a single color value
       uint32_t color = (r << 16) | (g << 8) | b;
-
+      printf("color = %d\n", color);
       // Draw the pixel on the screen
-      draw_tile(x, y, 1, 1, color);
+      // draw_tile(x, y, 1, 1, color);
     }
   }
 }
@@ -102,15 +102,15 @@ int main(const char *args) {
   // Decode the JPEG data into raw RGB data
   // int image_width, image_height;
   // unsigned char* image_data = decode_jpeg(hair_flowing, hair_flowing_len, &image_width, &image_height);
-  // unsigned char* image_data = hair_flowing;
-  // int image_width = 2268;
-  // int image_height = 1200;
-  // // Draw the image
-  // draw_image(image_data, image_width, image_height);
-  splash();
-  
+  unsigned char* image_data = hair_flowing;
+  int image_width = 2268;
+  int image_height = 1200;
+  // Draw the image
+  draw_image(image_data, image_width, image_height);
+  // splash();
+
   puts("Press any key to see its key code...\n");
-  while (1) {
+  while (0) {
     print_key();
   }
   return 0;
