@@ -72,7 +72,7 @@ void splash() {
 
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
   // Assuming a pixel is represented by 3 bytes (RGB), adjust accordingly if needed
-  int pixel_size = 3;
+  int pixel_size = 4;
   
   // Convert the image data to pixel data
   for (int y = 0; y < image_height; y++) {
@@ -81,12 +81,12 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
       unsigned char r = image_data[(y * image_width + x) * pixel_size];
       unsigned char g = image_data[(y * image_width + x) * pixel_size + 1];
       unsigned char b = image_data[(y * image_width + x) * pixel_size + 2];
-      printf("r = %d, g = %d, b = %d\n", r, g, b);
+      // printf("r = %d, g = %d, b = %d\n", r, g, b);
       // Combine the RGB values into a single color value
       uint32_t color = (r << 16) | (g << 8) | b;
-      printf("color = %d\n", color);
+      // printf("color = %d\n", color);
       // Draw the pixel on the screen
-      // draw_tile(x, y, 1, 1, color);
+      draw_tile(x, y, 1, 1, color);
     }
   }
 }
