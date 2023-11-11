@@ -72,7 +72,7 @@ void splash() {
 }
 
 // The (0,0) is at the top-left corner of the screen
-// and the order of rgb is actually bgr
+// and the order of rgb is actually bgr. https://blog.csdn.net/weixin_40437029/article/details/117530796
 // This function decodes a BMP image into raw RGB data
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
   AM_GPU_CONFIG_T info = {0};
