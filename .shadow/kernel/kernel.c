@@ -125,7 +125,10 @@ int main(const char *args) {
     draw_image(image_data, image_width, image_height);
   }
   
-  draw_line(0, 0, 400, 500, 0xffffff, 1, SIDE, 1);
+  draw_line(0, 0, 400, 500, 0xffffff, 0, SIDE, 1);
+  draw_line(0, 400, 500, 0, 0xffffff, 0, SIDE, 1);
+  draw_line(0, 0, 500, 500, 0xff0000, 0, 8, 2);
+  draw_line(10, 10, 450, 450, 0x0000ff, 1, 8, 3);
   // splash();
 
   puts("Press any key to see its key code...\n");

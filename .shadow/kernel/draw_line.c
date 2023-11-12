@@ -2,7 +2,12 @@
 #include "draw_tile.h"
 
 void draw_pixel(int x, int y, uint32_t color, int bold, int pixel_side) {
-    draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
+    if(bold){
+        draw_tile(x, y, pixel_side, pixel_side, color);
+    } else{
+        draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
+    }
+    
 }
 
 void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
