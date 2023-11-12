@@ -41,7 +41,8 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
             else
                 e += inc2;
             x += incx;
-            draw_pixel(x, y, bold, color, pixel_side);
+            // draw_pixel(x, y, bold, color, pixel_side);
+            draw_tile(x, y, bold, bold, color);
         }
 
     } else {
