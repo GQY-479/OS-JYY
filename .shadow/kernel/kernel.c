@@ -40,6 +40,12 @@ void print_key() {
   }
 }
 
+void get_w_h(){
+  AM_GPU_CONFIG_T info = {0};
+  ioe_read(AM_GPU_CONFIG, &info);
+  w = info.width;
+  h = info.height;
+}
 // draw a tile(w*h) with color
 #ifndef DRAW_TILE_H_
 #define DRAW_TILE_H_
@@ -114,6 +120,8 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
 int main(const char *args) {
   ioe_init();
 
+  get_w_h();
+
   puts("mainargs = \"");
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
@@ -125,10 +133,10 @@ int main(const char *args) {
     draw_image(image_data, image_width, image_height);
   }
   
-  draw_line(0, 0, 400, 500, 0xffffff, 0, SIDE, 1);
-  draw_line(0, 400, 500, 0, 0xffffff, 0, SIDE, 1);
-  draw_line(0, 0, 500, 500, 0xff0000, 0, 8, 2);
-  draw_line(10, 10, 450, 450, 0x0000ff, 1, 8, 3);
+  draw_line(0, 0, w, h, 0xffffff, 0, SIDE, 1);
+  draw_line(0, h, w, 0, 0xffffff, 0, SIDE, 1);
+  draw_line(0, 0, w-100, h-100, 0xff0000, 0, 8, 2);
+  draw_line(50, 50, 300, 600, 0x0000ff, 1, 8, 3);
   // splash();
 
   puts("Press any key to see its key code...\n");
