@@ -4,9 +4,9 @@
 #include <klib-macros.h>
 #include "image_data.h"
 #include "draw_tile.h"
-// #include "draw_line.h"
+#include "draw_line.h"
 
-#define SIDE 1
+#define SIDE 16
 
 static int w, h;  // Screen size
 
@@ -118,12 +118,14 @@ int main(const char *args) {
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
 
-  unsigned char* image_data = hair_flowing;
-  int image_width = 2268;
-  int image_height = 1200;
-
-  if(1)
+  if(0){
+    unsigned char* image_data = hair_flowing;
+    int image_width = 2268;
+    int image_height = 1200;
     draw_image(image_data, image_width, image_height);
+  }
+  
+  draw_line(0, 0, 100, 70, 0xffffff, 1, 1);
   // splash();
 
   puts("Press any key to see its key code...\n");
