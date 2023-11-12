@@ -125,7 +125,7 @@ int main(const char *args) {
     draw_image(image_data, image_width, image_height);
   }
   
-  draw_line(0, 0, 400, 300, 0xffffff, 1, SIDE, 2);
+  draw_line(0, 0, 400, 500, 0xffffff, 1, SIDE, 1);
   // splash();
 
   puts("Press any key to see its key code...\n");
