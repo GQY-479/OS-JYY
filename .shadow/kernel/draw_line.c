@@ -1,13 +1,6 @@
 #include "draw_line.h"
 #include "draw_tile.h"
 
-// void draw_pixel(int x, int y) {
-//     glBegin(GL_POINTS);
-//     glVertex2i(x, y);
-//     glEnd();
-// }
-
-
 void draw_pixel(int x, int y, uint32_t color, int bold, int pixel_side) {
     draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
 }
@@ -30,6 +23,7 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
     if (dx > dy) {
         // draw_pixel(x, y, bold, color, pixel_side);
         draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
+        
         // draw_tile(x, y, bold, bold, color);
         e = 2 * dy-dx;
         inc1 = 2*(dy-dx);
