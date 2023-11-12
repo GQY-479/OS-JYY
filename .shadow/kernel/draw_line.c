@@ -9,12 +9,7 @@
 
 
 void draw_pixel(int x, int y, uint32_t color, int bold, int pixel_side) {
-    if (pixel_side){
-        draw_tile(x*bold, y*bold, bold, bold, color);
-    } else {
-        draw_tile(x, y, bold, bold, color);
-    }
-    
+        draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
 }
 
 void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
@@ -71,14 +66,14 @@ void draw_line_dda(int x1, int y1, int x2, int y2, uint32_t color, int bold, int
     int dx = x2 - x1;
     int dy = y2 - y1;
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-    float Xinc = dx / (float) steps;
-    float Yinc = dy / (float) steps;
-    float X = x1;
-    float Y = y1;
+    float xinc = dx / (float) steps;
+    float yinc = dy / (float) steps;
+    float x = x1;
+    float y = y1;
     for (int i = 0; i <= steps; i++) {
-        draw_pixel(X, Y, color, bold, pixel_side);
-        X += Xinc;
-        Y += Yinc;
+        draw_pixel(x, y, color, bold, pixel_side);
+        x += xinc;
+        y += yinc;
     }
 }
 
