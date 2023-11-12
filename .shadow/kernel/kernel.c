@@ -134,7 +134,7 @@ int main(const char *args) {
   }
   
   draw_line(0, 0, w, h, 0xffffff, 0, SIDE, 1);
-  draw_line(0, h, w, 0, 0xffffff, 0, SIDE, 1);
+  draw_line(0, h, w, 0, 0xffffff, 0, 1, 1);
   draw_line(0, 0, w-100, h-100, 0xff0000, 0, 8, 2);
   draw_line(50, 50, 300, 600, 0x0000ff, 1, 8, 3);
   // splash();
