@@ -2,11 +2,13 @@
 #include <amdev.h>
 #include <klib.h>
 #include <klib-macros.h>
+#include "image_data.h"
 
-#define SIDE 16
+#define SIDE 1
 
 static int w, h;  // Screen size
 
+// Define a macro to map keycodes to key names
 #define KEYNAME(key) \
   [AM_KEY_##key] = #key,
 static const char *key_names[] = { AM_KEYS(KEYNAME) };
@@ -15,16 +17,28 @@ static inline void puts(const char *s) {
   for (; *s; s++) putch(*s);
 }
 
+// This function prints the key that was pressed on the keyboard
 void print_key() {
+  // Create an instance of the AM_INPUT_KEYBRD_T struct and initialize the keycode to AM_KEY_NONE
   AM_INPUT_KEYBRD_T event = { .keycode = AM_KEY_NONE };
+  
+  // Read the keyboard input and store it in the event struct
   ioe_read(AM_INPUT_KEYBRD, &event);
+  
+  // Check if a key was pressed and if it is a keydown event
   if (event.keycode != AM_KEY_NONE && event.keydown) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
     puts("\n");
   }
+
+  // Check if the ESC key was pressed and call halt() to exit
+  if (event.keycode == AM_KEY_ESCAPE && event.keydown) {
+    halt(1);
+  }
 }
 
+// draw a tile(w*h) with color
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // WARNING: large stack-allocated memory
   AM_GPU_FBDRAW_T event = {
@@ -52,6 +66,45 @@ void splash() {
   }
 }
 
+
+// The (0,0) is at the top-left corner of the screen
+// and the order of rgb is actually bgr. https://blog.csdn.net/weixin_40437029/article/details/117530796
+// This function display a half-decoded BMP image
+void draw_image(const unsigned char* image_data, int image_width, int image_height) {
+  AM_GPU_CONFIG_T info = {0};
+  ioe_read(AM_GPU_CONFIG, &info);
+  w = info.width;
+  h = info.height;
+
+  int pixel_size = 3;
+
+  // Calculate the scaling factors
+  float scale_x = (float)w / image_width;
+  float scale_y = (float)h / image_height;
+
+  // Iterate over each pixel in the new grid
+  for (int y = h-1; y >= 0; y--) {
+    for (int x = 0; x < w; x++) {
+      // Calculate the corresponding pixel position in the original grid
+      int original_x = (int)(x / scale_x);
+      int original_y = (int)((h-y-1) / scale_y);
+
+      // Get the RGB values from the original image data
+      unsigned char b = image_data[(original_y * image_width + original_x) * pixel_size];
+      unsigned char g = image_data[(original_y * image_width + original_x) * pixel_size + 1];
+      unsigned char r = image_data[(original_y * image_width + original_x) * pixel_size + 2];
+
+      // Combine the RGB values into a single color value
+      uint32_t color = (r << 16) | (g << 8) | b;
+
+      // Draw the pixel on the screen
+      draw_tile(x, y, 1, 1, color);
+    }
+  }
+}
+
+
+
 // Operating system is a C program!
 int main(const char *args) {
   ioe_init();
@@ -60,7 +113,13 @@ int main(const char *args) {
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
 
-  splash();
+  unsigned char* image_data = hair_flowing;
+  int image_width = 2268;
+  int image_height = 1200;
+
+  if(1)
+    draw_image(image_data, image_width, image_height);
+  // splash();
 
   puts("Press any key to see its key code...\n");
   while (1) {
