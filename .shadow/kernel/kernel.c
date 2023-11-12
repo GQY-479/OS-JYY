@@ -3,6 +3,8 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include "image_data.h"
+#include "draw_tile.h"
+// #include "draw_line.h"
 
 #define SIDE 1
 
@@ -27,13 +29,8 @@ void print_key() {
   
   // Check if a key was pressed and if it is a keydown event
   if (event.keycode != AM_KEY_NONE && event.keydown) {
-    // Print a message indicating that a key was pressed
     puts("Key pressed: ");
-    
-    // Print the name of the key that was pressed using the key_names array
     puts(key_names[event.keycode]);
-    
-    // Print a newline character
     puts("\n");
   }
 
@@ -44,6 +41,8 @@ void print_key() {
 }
 
 // draw a tile(w*h) with color
+#ifndef DRAW_TILE_H_
+#define DRAW_TILE_H_
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // WARNING: large stack-allocated memory
   AM_GPU_FBDRAW_T event = {
@@ -55,6 +54,7 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   }
   ioe_write(AM_GPU_FBDRAW, &event);
 }
+#endif
 
 void splash() {
   AM_GPU_CONFIG_T info = {0};
@@ -74,7 +74,7 @@ void splash() {
 
 // The (0,0) is at the top-left corner of the screen
 // and the order of rgb is actually bgr. https://blog.csdn.net/weixin_40437029/article/details/117530796
-// This function decodes a BMP image into raw RGB data
+// This function display a half-decoded BMP image
 void draw_image(const unsigned char* image_data, int image_width, int image_height) {
   AM_GPU_CONFIG_T info = {0};
   ioe_read(AM_GPU_CONFIG, &info);
@@ -118,13 +118,10 @@ int main(const char *args) {
   puts(args);  // make run mainargs=xxx
   puts("\"\n");
 
-  // Decode the JPEG data into raw RGB data
-  // int image_width, image_height;
-  // unsigned char* image_data = decode_jpeg(hair_flowing, hair_flowing_len, &image_width, &image_height);
   unsigned char* image_data = hair_flowing;
   int image_width = 2268;
   int image_height = 1200;
-  // Draw the image
+
   if(1)
     draw_image(image_data, image_width, image_height);
   // splash();
@@ -135,21 +132,3 @@ int main(const char *args) {
   }
   return 0;
 }
-
-
-// // Operating system is a C program!
-// int main(const char *args) {
-//   ioe_init();
-
-//   puts("mainargs = \"");
-//   puts(args);  // make run mainargs=xxx
-//   puts("\"\n");
-
-//   splash();
-
-//   puts("Press any key to see its key code...\n");
-//   while (1) {
-//     print_key();
-//   }
-//   return 0;
-// }
