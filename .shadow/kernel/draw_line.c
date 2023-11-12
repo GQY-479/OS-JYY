@@ -9,7 +9,7 @@
 
 
 void draw_pixel(int x, int y, uint32_t color, int bold, int pixel_side) {
-        draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
+    draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
 }
 
 void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
@@ -28,7 +28,7 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
     if (y2 < y1) incy = -1;
     x = x1; y = y1;
     if (dx > dy) {
-        draw_pixel(x*bold, y*bold, bold, color, pixel_side);
+        draw_pixel(x, y, bold, color, pixel_side);
         e = 2 * dy-dx;
         inc1 = 2*(dy-dx);
         inc2 = 2*dy;
@@ -40,11 +40,11 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
             else
                 e += inc2;
             x += incx;
-            draw_pixel(x*bold, y*bold, bold, color, pixel_side);
+            draw_pixel(x, y, bold, color, pixel_side);
         }
 
     } else {
-        draw_pixel(x*bold, y*bold, bold, color, pixel_side);
+        draw_pixel(x, y, bold, color, pixel_side);
         e = 2*dx-dy;
         inc1 = 2*(dx-dy);
         inc2 = 2*dx;
@@ -56,7 +56,7 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
             else
                 e += inc2;
             y += incy;
-            draw_pixel(x*bold, y*bold, bold, color, pixel_side);
+            draw_pixel(x, y, bold, color, pixel_side);
         }
     }
 }
@@ -87,7 +87,7 @@ void draw_line_midpoint(int x1, int y1, int x2, int y2, uint32_t color, int bold
     int x = x1;
     int y = y1;
 
-    draw_pixel(x*bold, y*bold, bold, color, pixel_side);
+    draw_pixel(x, y, bold, color, pixel_side);
 
     while (x < x2) {
         x++;
@@ -97,7 +97,7 @@ void draw_line_midpoint(int x1, int y1, int x2, int y2, uint32_t color, int bold
             y++;
             d = d + change2;
         }
-        draw_pixel(x*bold, y*bold, bold, color, pixel_side);
+        draw_pixel(x, y, bold, color, pixel_side);
     }
 }
 
