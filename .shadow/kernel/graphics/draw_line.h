@@ -2,7 +2,6 @@
 #define DRAW_LINE_H
 
 #include <stdint.h>
-// #include <GL/glut.h>
 
 // Function to draw a pixel
 void draw_pixel(int x, int y, uint32_t color, int bold, int pixel_side);

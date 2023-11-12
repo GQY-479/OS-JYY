@@ -3,8 +3,8 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include "image_data.h"
-#include "draw_tile.h"
-#include "draw_line.h"
+#include "./graphics/draw_tile.h"
+#include "./graphics/draw_line.h"
 
 #define SIDE 8
 
