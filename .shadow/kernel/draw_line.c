@@ -7,11 +7,17 @@
 //     glEnd();
 // }
 
-void draw_pixel(int x, int y) {
+
+void draw_pixel(int x, int y, uint32_t color, int bold, int pixel_side) {
+    if (pixel_side){
+        draw_tile(x*bold, y*bold, bold, bold, color);
+    } else {
+        draw_tile(x, y, bold, bold, color);
+    }
     
 }
 
-void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bold) {
+void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
     int dx, dy, i, e;
     int incx, incy, inc1, inc2;
     int x,y;
@@ -27,7 +33,7 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
     if (y2 < y1) incy = -1;
     x = x1; y = y1;
     if (dx > dy) {
-        draw_tile(x, y, bold, bold, color);
+        draw_pixel(x*bold, y*bold, bold, color, pixel_side);
         e = 2 * dy-dx;
         inc1 = 2*(dy-dx);
         inc2 = 2*dy;
@@ -39,11 +45,11 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
             else
                 e += inc2;
             x += incx;
-            draw_tile(x, y, bold, bold, color);
+            draw_pixel(x*bold, y*bold, bold, color, pixel_side);
         }
 
     } else {
-        draw_tile(x, y, bold, bold, color);
+        draw_pixel(x*bold, y*bold, bold, color, pixel_side);
         e = 2*dx-dy;
         inc1 = 2*(dx-dy);
         inc2 = 2*dx;
@@ -55,13 +61,13 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
             else
                 e += inc2;
             y += incy;
-            draw_tile(x, y, bold, bold, color);
+            draw_pixel(x*bold, y*bold, bold, color, pixel_side);
         }
     }
 }
 
 // DDA Line Drawing Algorithm
-void draw_line_dda(int x1, int y1, int x2, int y2, uint32_t color, int bold) {
+void draw_line_dda(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
     int dx = x2 - x1;
     int dy = y2 - y1;
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
@@ -70,14 +76,14 @@ void draw_line_dda(int x1, int y1, int x2, int y2, uint32_t color, int bold) {
     float X = x1;
     float Y = y1;
     for (int i = 0; i <= steps; i++) {
-        draw_pixel(X,Y);
+        draw_pixel(X, Y, color, bold, pixel_side);
         X += Xinc;
         Y += Yinc;
     }
 }
 
 // Midpoint Line Drawing Algorithm
-void draw_line_midpoint(int x1, int y1, int x2, int y2, uint32_t color, int bold) {
+void draw_line_midpoint(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
     int dx = x2 - x1;
     int dy = y2 - y1;
     int d = 2 * dy - dx;
@@ -86,7 +92,7 @@ void draw_line_midpoint(int x1, int y1, int x2, int y2, uint32_t color, int bold
     int x = x1;
     int y = y1;
 
-    draw_tile(x, y, bold, bold, color);
+    draw_pixel(x*bold, y*bold, bold, color, pixel_side);
 
     while (x < x2) {
         x++;
@@ -96,20 +102,20 @@ void draw_line_midpoint(int x1, int y1, int x2, int y2, uint32_t color, int bold
             y++;
             d = d + change2;
         }
-        draw_tile(x, y, bold, bold, color);
+        draw_pixel(x*bold, y*bold, bold, color, pixel_side);
     }
 }
 
-void draw_line(int x1, int y1, int x2, int y2, uint32_t color, int bold, int algorithm) {
+void draw_line(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side, int algorithm) {
     switch (algorithm) {
         case 1:
-            draw_line_bresenham(x1, y1, x2, y2, color, bold);
+            draw_line_bresenham(x1, y1, x2, y2, color, bold, pixel_side);
             break;
         case 2:
-            draw_line_dda(x1, y1, x2, y2, color, bold);
+            draw_line_dda(x1, y1, x2, y2, color, bold, pixel_side);
             break;
         case 3:
-            draw_line_midpoint(x1, y1, x2, y2, color, bold);
+            draw_line_midpoint(x1, y1, x2, y2, color, bold, pixel_side);
             break;
         default:
             printf("Invalid algorithm choice. Please choose between 1 (Bresenham), 2 (DDA), or 3 (Midpoint).\n");
