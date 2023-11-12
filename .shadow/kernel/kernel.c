@@ -6,7 +6,7 @@
 #include "draw_tile.h"
 #include "draw_line.h"
 
-#define SIDE 16
+#define SIDE 8
 
 static int w, h;  // Screen size
 

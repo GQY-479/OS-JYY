@@ -22,9 +22,6 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
     x = x1; y = y1;
     if (dx > dy) {
         draw_pixel(x, y, color, bold, pixel_side);
-        // draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
-        
-        // draw_tile(x, y, bold, bold, color);
         e = 2 * dy-dx;
         inc1 = 2*(dy-dx);
         inc2 = 2*dy;
@@ -37,8 +34,6 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, uint32_t color, int bol
                 e += inc2;
             x += incx;
             draw_pixel(x, y, color, bold, pixel_side);
-            // draw_tile(x, y, bold, bold, color);
-            // draw_tile(x*pixel_side, y*pixel_side, pixel_side, pixel_side, color);
         }
 
     } else {
