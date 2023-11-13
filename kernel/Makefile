@@ -1,5 +1,5 @@
 NAME := kernel
-SRCS := kernel.c
+SRCS := kernel.c ./graphics/draw_line.c
 export MODULE  := L0
 export AM_HOME := $(PWD)/../abstract-machine
 ifeq ($(ARCH),)
