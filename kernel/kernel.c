@@ -5,6 +5,7 @@
 #include "image_data.h"
 #include "./graphics/draw_tile.h"
 #include "./graphics/draw_line.h"
+#include "./graphics/draw_circle.h"
 
 #define SIDE 8
 
@@ -133,10 +134,18 @@ int main(const char *args) {
     draw_image(image_data, image_width, image_height);
   }
   
-  draw_line(0, 0, w, h, 0xffffff, 0, SIDE, 1);
-  draw_line(0, h, w, 0, 0xffffff, 0, 1, 1);
-  draw_line(0, 0, w-100, h-100, 0xff0000, 0, 8, 2);
-  draw_line(50, 50, 300, 600, 0x0000ff, 1, 8, 3);
+  if(0){
+    draw_line(0, 0, w, h, 0xffffff, 0, SIDE, 1);
+    draw_line(0, h, w, 0, 0xffffff, 0, 1, 1);
+    draw_line(0, 0, w-100, h-100, 0xff0000, 0, 8, 2);
+    draw_line(50, 50, 300, 600, 0x0000ff, 1, 8, 3);
+  }
+
+  if(1){
+    draw_circle(w/2, h/2, 200, 0xff0000);
+    draw_ellipse(w/2, h/2, 200, 100, 0x00ff00);
+  }
+
   // splash();
 
   puts("Press any key to see its key code...\n");
