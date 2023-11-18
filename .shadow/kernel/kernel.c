@@ -219,7 +219,7 @@ int main(const char *args) {
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x0000FF; // Blue color
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x000F00, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x0FFF00, bold, pixel_side);
   }
   
 
