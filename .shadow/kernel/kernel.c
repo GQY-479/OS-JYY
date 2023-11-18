@@ -223,7 +223,7 @@ int main(const char *args) {
     color = 0x00FF00; // Green color
 
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
+    // drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
     // draw_line(x2, y2, x3, y3, color+0x0000FF, 0, 1, 1);
 
 
@@ -233,7 +233,7 @@ int main(const char *args) {
     numPoints = 16;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x0000FF; // Blue color
-    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    // draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     drawCubicBezier(pointsX, pointsY, numSegments, numPoints, color, bold, pixel_side);
   }
   
