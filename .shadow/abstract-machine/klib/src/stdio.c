@@ -6,6 +6,31 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+void print_int(int num) {
+  if (num == 0) {
+    putch('0');
+    return;
+  }
+
+  if (num < 0) {
+    putch('-');
+    num = -num;
+  }
+
+  char digits[10];
+  int i = 0;
+
+  while (num > 0) {
+    digits[i] = num % 10 + '0';
+    num /= 10;
+    i++;
+  }
+
+  for (int j = i - 1; j >= 0; j--) {
+    putch(digits[j]);
+  }
+}
+
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
@@ -16,8 +41,7 @@ int printf(const char *fmt, ...) {
       fmt++;
       if (*fmt == 'd') {
         int num = va_arg(args, int);
-        putch(num + '0');  // convert the integer to its ascii character representation for printing.
-
+        print_int(num);
         count++;
       } else if (*fmt == 's') {
         char *str = va_arg(args, char *);
@@ -30,7 +54,6 @@ int printf(const char *fmt, ...) {
       }
     } else {
       putch(*fmt);
-
       count++;
     }
     fmt++;

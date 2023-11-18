@@ -1,6 +1,19 @@
 // #include <stdio.h>
 // #include <math.h>
 #include "draw_tile.h"
+#include "draw_line.h"
+
+// draw feature graphics
+void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32_t color, int bold, int pixel_side){
+    for (int i = 0; i < numPoints; i++) {
+        int x0 = pointsX[i];
+        int y0 = pointsY[i];
+        int x1 = pointsX[i + 1];
+        int y1 = pointsY[i + 1];
+        draw_line(x0, y0, x1, y1, color, bold, pixel_side, 1);
+    }
+}
+
 
 // Function to calculate the quadratic Bezier curve point
 void quadraticBezier(float x0, float y0, float x1, float y1, float x2, float y2, float t, float* x, float* y) {
@@ -13,17 +26,36 @@ void quadraticBezier(float x0, float y0, float x1, float y1, float x2, float y2,
     *y = uu * y0 + 2 * ut * y1 + tt * y2;
 }
 
-// Function to draw a quadratic Bezier curve
-void drawQuadraticBezier(float x0, float y0, float x1, float y1, float x2, float y2, uint32_t color) {
-    int numSegments = 100; // Number of line segments to approximate the curve
+void drawQuadraticBezier(float* pointsX, float* pointsY, int numPoints, int numSegments, uint32_t color, int bold, int pixel_side) {
+    assert(sizeof(pointsX) == sizeof(pointsY));
+    assert(numPoints >= 3 && numPoints % 2 == 1);
 
-    for (int i = 0; i <= numSegments; i++) {
-        float t = i / (float)numSegments;
-        float x, y;
-        quadraticBezier(x0, y0, x1, y1, x2, y2, t, &x, &y);
-        int pixel_x = (int)x;
-        int pixel_y = (int)y;
-        draw_tile(pixel_x, pixel_y, 1, 1, color);
+    for (int i = 0; i < numPoints; i++) {
+        float x0 = pointsX[i];
+        float y0 = pointsY[i];
+        float x1 = pointsX[i + 1];
+        float y1 = pointsY[i + 1];
+        float x2 = pointsX[i + 2];
+        float y2 = pointsY[i + 2];
+		
+		int pixel_x = x0, pixel_y = y0;
+		int prev_pixel_x = x0, prev_pixel_y = y0;
+
+        for (int j = 0; j <= numSegments; j++) {
+            float t = j / numSegments;
+            float x, y;
+            quadraticBezier(x0, y0, x1, y1, x2, y2, t, &x, &y);
+			
+            prev_pixel_x = pixel_x;
+            prev_pixel_y = pixel_y;
+            pixel_x = (int)x;
+            pixel_y = (int)y;
+			
+            if(j > 0){
+                // last parameter i shows that we use the Bresenham algorithm to draw a straight line.
+                draw_line(prev_pixel_x, prev_pixel_y, pixel_x, pixel_y, color, bold, pixel_side, 1);
+            }
+        }
     }
 }
 
@@ -39,42 +71,36 @@ void cubicBezier(float x0, float y0, float x1, float y1, float x2, float y2, flo
     *y = uuu * y0 + 3 * uu * t * y1 + 3 * u * tt * y2 + ttt * y3;
 }
 
-// Function to draw a cubic Bezier curve
-void drawCubicBezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, uint32_t color) {
-    int numSegments = 100; // Number of line segments to approximate the curve
-
-    for (int i = 0; i <= numSegments; i++) {
-        float t = i / (float)numSegments;
-        float x, y;
-        cubicBezier(x0, y0, x1, y1, x2, y2, x3, y3, t, &x, &y);
-        int pixel_x = (int)x;
-        int pixel_y = (int)y;
-        draw_tile(pixel_x, pixel_y, 1, 1, color);
-    }
-}
-
-
 // Function to draw a smooth Bezier curve using segment-wise cubic Bezier curves
-void drawSmoothBezier(float* pointsX, float* pointsY, int numPoints, uint32_t color) {
-    int numSegments = 100; // Number of line segments to approximate each cubic Bezier curve
-    float step = 1.0 / numSegments;
+void drawCubicBezier(float* pointsX, float* pointsY, int numPoints, int numSegments, uint32_t color, int bold, int pixel_side) {
+    assert(sizeof(pointsX) == sizeof(pointsY));
+    assert(numPoints >= 4 && numPoints % 3 == 1);
 
-    for (int i = 0; i < numPoints - 3; i += 3) {
+    for (int i = 0; i < numPoints; i++) {
         float x0 = pointsX[i];
         float y0 = pointsY[i];
         float x1 = pointsX[i + 1];
         float y1 = pointsY[i + 1];
         float x2 = pointsX[i + 2];
         float y2 = pointsY[i + 2];
-        float x3 = pointsX[i + 3];
-        float y3 = pointsY[i + 3];
+		
+		int pixel_x = x0, pixel_y = y0;
+		int prev_pixel_x = x0, prev_pixel_y = y0;
 
-        for (float t = 0; t <= 1; t += step) {
+        for (int j = 0; j <= numSegments; j++) {
+            float t = j / numSegments;
             float x, y;
-            cubicBezier(x0, y0, x1, y1, x2, y2, x3, y3, t, &x, &y);
-            int pixel_x = (int)x;
-            int pixel_y = (int)y;
-            draw_tile(pixel_x, pixel_y, 1, 1, color);
+            quadraticBezier(x0, y0, x1, y1, x2, y2, t, &x, &y);
+			
+            prev_pixel_x = pixel_x;
+            prev_pixel_y = pixel_y;
+            pixel_x = (int)x;
+            pixel_y = (int)y;
+			
+            if(j > 0){
+                // last parameter i shows that we use the Bresenham algorithm to draw a straight line.
+                draw_line(prev_pixel_x, prev_pixel_y, pixel_x, pixel_y, color, bold, pixel_side, 1);
+            }
         }
     }
 }
