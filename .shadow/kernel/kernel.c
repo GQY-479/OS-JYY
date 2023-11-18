@@ -123,6 +123,7 @@ int main(const char *args) {
   ioe_init();
 
   get_w_h();
+  printf("Screen size: %d x %d\n", w, h);
 
   puts("mainargs = \"");
   puts(args);  // make run mainargs=xxx
@@ -149,12 +150,16 @@ int main(const char *args) {
 
   if (1){
         // Example usage
-    int x0 = 100, y0 = 100;   // Start point
-    int x1 = 200, y1 = 50;    // Control point
-    int x2 = 300, y2 = 100;   // End point
+    int x0 = 100, y0 = h-100;   // Start point
+    int x1 = w/2, y1 = 50;    // Control point
+    int x2 = w, y2 = h;   // End point
     uint32_t color = 0xFF0000; // Red color
 
     drawQuadraticBezier(x0, y0, x1, y1, x2, y2, color);
+
+    draw_line(x0, y0, x1, y1, color+0x00FF00, 0, 1, 1);
+    draw_line(x1, y1, x2, y2, color+0x00FF00, 0, 1, 1);
+    
 
     // int x0 = 100, y0 = 100;   // Start point
     // int x1 = 150, y1 = 50;    // Control point 1
@@ -163,10 +168,11 @@ int main(const char *args) {
     color = 0x00FF00; // Green color
 
     drawCubicBezier(x0, y0, x1, y1, x2, y2, x3, y3, color);
+    draw_line(x2, y2, x3, y3, color+0x0000FF, 0, 1, 1);
 
 
-    float pointsX[] = {100, 150, 250, 300, 350, 400, 450, 500}; // X-coordinates of control points
-    float pointsY[] = {100, 50, 150, 100, 250, 50, 300, 100}; // Y-coordinates of control points
+    float pointsX[] = {100, w/2, w, 300, 350, 400, 450, 500}; // X-coordinates of control points
+    float pointsY[] = {h, 50, h/2, 100, h/3, 50, 300, 100}; // Y-coordinates of control points
     int numPoints = sizeof(pointsX) / sizeof(pointsX[0]);
     color = 0x0000FF; // Blue color
 
