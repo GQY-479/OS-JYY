@@ -206,20 +206,20 @@ int main(const char *args) {
     numPoints = 3;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    // drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
+    drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color+0x00FF00, bold, pixel_side);
 
 
     numPoints = 4;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x00FF00; // Green color
-    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    // drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
+    // draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0xF000F0, bold, pixel_side);
 
     numPoints = 16;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x0000FF; // Blue color
-    // draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
+    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0xFFFF00, bold, pixel_side);
   }
   
 
