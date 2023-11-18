@@ -205,8 +205,8 @@ int main(const char *args) {
 
     numPoints = 3;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
-    // draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
+    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    // drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
 
 
     numPoints = 4;
