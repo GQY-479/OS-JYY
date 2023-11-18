@@ -30,7 +30,7 @@ void drawQuadraticBezier(float* pointsX, float* pointsY, int numPoints, int numS
     assert(sizeof(pointsX) == sizeof(pointsY));
     assert(numPoints >= 3 && numPoints % 2 == 1);
 
-    for (int i = 0; i < numPoints; i++) {
+    for (int i = 0; i < numPoints-2; i++) {
         float x0 = pointsX[i];
         float y0 = pointsY[i];
         float x1 = pointsX[i + 1];
@@ -76,7 +76,7 @@ void drawCubicBezier(float* pointsX, float* pointsY, int numPoints, int numSegme
     assert(sizeof(pointsX) == sizeof(pointsY));
     assert(numPoints >= 4 && numPoints % 3 == 1);
 
-    for (int i = 0; i < numPoints; i++) {
+    for (int i = 0; i < numPoints-3; i++) {
         float x0 = pointsX[i];
         float y0 = pointsY[i];
         float x1 = pointsX[i + 1];
