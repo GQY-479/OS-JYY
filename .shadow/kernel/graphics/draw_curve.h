@@ -86,22 +86,21 @@ void drawCubicBezier(float* pointsX, float* pointsY, int numPoints, int numSegme
         float y3 = pointsY[i + 3];
 		
 		int pixel_x = x0, pixel_y = y0;
-		// int prev_pixel_x = x0, prev_pixel_y = y0;
+		int prev_pixel_x = x0, prev_pixel_y = y0;
 
         for (int j = 0; j <= numSegments; j++) {
             float t = j / (float)numSegments;
             float x, y;
             cubicBezier(x0, y0, x1, y1, x2, y2, x3, y3, t, &x, &y);
 			
-            // prev_pixel_x = pixel_x;
-            // prev_pixel_y = pixel_y;
+            prev_pixel_x = pixel_x;
+            prev_pixel_y = pixel_y;
             pixel_x = (int)x;
             pixel_y = (int)y;
 			
             if(j > 0){
                 // last parameter i shows that we use the Bresenham algorithm to draw a straight line.
-                // draw_line(prev_pixel_x, prev_pixel_y, pixel_x, pixel_y, color, bold, pixel_side, 1);
-                draw_tile(pixel_x, pixel_y, pixel_side, pixel_side, color);
+                draw_line(prev_pixel_x, prev_pixel_y, pixel_x, pixel_y, color, bold, pixel_side, 1);
             }
         }
     }
