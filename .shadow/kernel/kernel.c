@@ -144,7 +144,7 @@ void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoin
         pointsX[i] = i * stepX;
         // float angle = pointsX[i] * (2.0 * PI / w);
         // pointsY[i] = amplitude * sine(angle);
-        pointsY[i] = amplitude * (float)rand() / 10;
+        pointsY[i] = amplitude * ((int)rand() % 3-1);
     }
 }
 
@@ -193,7 +193,8 @@ int main(const char *args) {
     float pointsX[numPoints];
     float pointsY[numPoints];
 
-    generate_waveform(w, h, pointsX, pointsY, 3);
+    numPoints = 3;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
 
@@ -204,7 +205,8 @@ int main(const char *args) {
     // int x0 = 100, y0 = 100;   // Start point
     // int x1 = 150, y1 = 50;    // Control point 1
     // int x2 = 250, y2 = 150;   // Control point 2
-    generate_waveform(w, h, pointsX, pointsY, 4);
+    numPoints = 4;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
     // int x3 = 300, y3 = 100;   // End point
     color = 0x00FF00; // Green color
 
@@ -216,7 +218,8 @@ int main(const char *args) {
     // float pointsX[] = {100, w/2, w, 300, 350, 400, 450, 500}; // X-coordinates of control points
     // float pointsY[] = {h, 50, h/2, 100, h/3, 50, 300, 100}; // Y-coordinates of control points
     // int numPoints = sizeof(pointsX) / sizeof(pointsX[0]);
-    generate_waveform(w, h, pointsX, pointsY, 16);
+    numPoints = 16;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x0000FF; // Blue color
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     drawCubicBezier(pointsX, pointsY, numSegments, numPoints, color, bold, pixel_side);
