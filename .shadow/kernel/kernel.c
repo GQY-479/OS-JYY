@@ -144,7 +144,7 @@ void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoin
         pointsX[i] = i * stepX;
         // float angle = pointsX[i] * (2.0 * PI / w);
         // pointsY[i] = amplitude * sine(angle);
-        pointsY[i] = h * ((int)rand() % 1000 / 1000);
+        pointsY[i] = h * ((int)rand() % 1000 / (float)1000);
     }
 
     printf("pointsX = {");
