@@ -29,7 +29,7 @@ void quadraticBezier(float x0, float y0, float x1, float y1, float x2, float y2,
 void drawQuadraticBezier(float* pointsX, float* pointsY, int numPoints, int numSegments, uint32_t color, int bold, int pixel_side) {
     assert(numPoints >= 3 && numPoints % 2 == 1);
 
-    for (int i = 0; i < numPoints-2; i++) {
+    for (int i = 0; i < numPoints-2; i += 2) {
         float x0 = pointsX[i];
         float y0 = pointsY[i];
         float x1 = pointsX[i + 1];
@@ -75,7 +75,7 @@ void cubicBezier(float x0, float y0, float x1, float y1, float x2, float y2, flo
 void drawCubicBezier(float* pointsX, float* pointsY, int numPoints, int numSegments, uint32_t color, int bold, int pixel_side) {
     assert(numPoints >= 4 && numPoints % 3 == 1);
 
-    for (int i = 0; i < numPoints-3; i++) {
+    for (int i = 0; i < numPoints-3; i += 3) {
         float x0 = pointsX[i];
         float y0 = pointsY[i];
         float x1 = pointsX[i + 1];

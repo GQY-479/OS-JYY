@@ -213,13 +213,13 @@ int main(const char *args) {
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x00FF00; // Green color
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0xF000F0, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0xF00000, bold, pixel_side);
 
     numPoints = 16;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x0000FF; // Blue color
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0xFFFF00, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x000F00, bold, pixel_side);
   }
   
 
