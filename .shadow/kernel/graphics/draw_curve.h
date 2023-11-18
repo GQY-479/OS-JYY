@@ -41,7 +41,7 @@ void drawQuadraticBezier(float* pointsX, float* pointsY, int numPoints, int numS
 		int prev_pixel_x = x0, prev_pixel_y = y0;
 
         for (int j = 0; j <= numSegments; j++) {
-            float t = j / numSegments;
+            float t = j / (float)numSegments;
             float x, y;
             quadraticBezier(x0, y0, x1, y1, x2, y2, t, &x, &y);
 			
@@ -89,7 +89,7 @@ void drawCubicBezier(float* pointsX, float* pointsY, int numPoints, int numSegme
 		// int prev_pixel_x = x0, prev_pixel_y = y0;
 
         for (int j = 0; j <= numSegments; j++) {
-            float t = j / numSegments;
+            float t = j / (float)numSegments;
             float x, y;
             cubicBezier(x0, y0, x1, y1, x2, y2, x3, y3, t, &x, &y);
 			
