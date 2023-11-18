@@ -6,8 +6,10 @@
 #include "./graphics/draw_tile.h"
 #include "./graphics/draw_line.h"
 #include "./graphics/draw_circle.h"
+#include "./graphics/draw_curve.h"
+#include <time.h>
 
-#define SIDE 8
+#define SIDE 3
 
 static int w, h;  // Screen size
 
@@ -116,12 +118,54 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
 }
 
 
+#define PI 3.14159265359
+
+// float sine(float x) {
+//     float result = x;
+//     float numerator = x * x * x;
+//     float denominator = 6.0;
+//     int sign = -1;
+
+//     for (int i = 3; i <= 15; i += 2) {
+//         result += sign * (numerator / denominator);
+//         numerator *= x * x;
+//         denominator *= (i + 1) * (i + 2);
+//         sign *= -1;
+//     }
+
+//     return result;
+// }
+
+void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoints) {
+    float stepX = (float)w / (numPoints - 1);
+    // float amplitude = h / 2.0;
+
+    for (int i = 0; i < numPoints; i++) {
+        pointsX[i] = i * stepX;
+        // float angle = pointsX[i] * (2.0 * PI / w);
+        // pointsY[i] = amplitude * sine(angle);
+        pointsY[i] = h * ((int)rand() % 1000 / (float)1000);
+    }
+
+    printf("pointsX = {");
+    for (int i = 0; i < numPoints; i++) {
+        printf("%f, ", pointsX[i]);
+    }
+    printf("}\n");
+
+    printf("pointsY = {");
+    for (int i = 0; i < numPoints; i++) {
+        printf("%f, ", pointsY[i]);
+    }
+    printf("}\n");
+}
 
 // Operating system is a C program!
 int main(const char *args) {
   ioe_init();
 
   get_w_h();
+  printf("Screen size: %d x %d\n", w, h);
 
   puts("mainargs = \"");
   puts(args);  // make run mainargs=xxx
@@ -141,10 +185,43 @@ int main(const char *args) {
     draw_line(50, 50, 300, 600, 0x0000ff, 1, 8, 3);
   }
 
-  if(1){
+  if(0){
     draw_circle(w/2, h/2, 200, 0xff0000);
     draw_ellipse(w/2, h/2, 200, 100, 0x00ff00);
   }
+
+  if (1){
+
+
+    int numSegments = 100; // Number of line segments to approximate the curve
+    uint32_t color = 0xFF0000; // Red color
+    int bold = 1;
+    int pixel_side = SIDE;
+
+    int numPoints = 100;  // Number of control points
+
+    float pointsX[numPoints];
+    float pointsY[numPoints];
+
+    numPoints = 3;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color+0x00FF00, bold, pixel_side);
+
+
+    numPoints = 4;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    color = 0x00FF00; // Green color
+    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0xF00000, bold, pixel_side);
+
+    numPoints = 16;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    color = 0x0000FF; // Blue color
+    draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x0FFF00, bold, pixel_side);
+  }
+  
 
   // splash();
 
