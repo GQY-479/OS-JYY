@@ -6,6 +6,7 @@
 #include "./graphics/draw_tile.h"
 #include "./graphics/draw_line.h"
 #include "./graphics/draw_circle.h"
+#include "./graphics/draw_curve.h"
 
 #define SIDE 8
 
@@ -141,10 +142,37 @@ int main(const char *args) {
     draw_line(50, 50, 300, 600, 0x0000ff, 1, 8, 3);
   }
 
-  if(1){
+  if(0){
     draw_circle(w/2, h/2, 200, 0xff0000);
     draw_ellipse(w/2, h/2, 200, 100, 0x00ff00);
   }
+
+  if (1){
+        // Example usage
+    int x0 = 100, y0 = 100;   // Start point
+    int x1 = 200, y1 = 50;    // Control point
+    int x2 = 300, y2 = 100;   // End point
+    uint32_t color = 0xFF0000; // Red color
+
+    drawQuadraticBezier(x0, y0, x1, y1, x2, y2, color);
+
+    // int x0 = 100, y0 = 100;   // Start point
+    // int x1 = 150, y1 = 50;    // Control point 1
+    // int x2 = 250, y2 = 150;   // Control point 2
+    int x3 = 300, y3 = 100;   // End point
+    color = 0x00FF00; // Green color
+
+    drawCubicBezier(x0, y0, x1, y1, x2, y2, x3, y3, color);
+
+
+    float pointsX[] = {100, 150, 250, 300, 350, 400, 450, 500}; // X-coordinates of control points
+    float pointsY[] = {100, 50, 150, 100, 250, 50, 300, 100}; // Y-coordinates of control points
+    int numPoints = sizeof(pointsX) / sizeof(pointsX[0]);
+    color = 0x0000FF; // Blue color
+
+    drawSmoothBezier(pointsX, pointsY, numPoints, color);
+  }
+  
 
   // splash();
 
