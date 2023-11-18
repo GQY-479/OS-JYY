@@ -197,7 +197,7 @@ int main(const char *args) {
     // int x2 = w, y2 = h;   // End point
     int numSegments = 100; // Number of line segments to approximate the curve
     uint32_t color = 0xFF0000; // Red color
-    int bold = 0;
+    int bold = 1;
     int pixel_side = SIDE;
 
     int numPoints = 100;  // Number of control points

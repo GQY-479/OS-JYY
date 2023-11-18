@@ -5,7 +5,7 @@
 
 // draw feature graphics
 void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32_t color, int bold, int pixel_side){
-    for (int i = 0; i < numPoints; i++) {
+    for (int i = 0; i < numPoints-1; i++) {
         int x0 = pointsX[i];
         int y0 = pointsY[i];
         int x1 = pointsX[i + 1];
