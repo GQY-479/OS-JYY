@@ -138,13 +138,13 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
 
 void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoints) {
     float stepX = (float)w / (numPoints - 1);
-    float amplitude = h / 2.0;
+    // float amplitude = h / 2.0;
 
     for (int i = 0; i < numPoints; i++) {
         pointsX[i] = i * stepX;
         // float angle = pointsX[i] * (2.0 * PI / w);
         // pointsY[i] = amplitude * sine(angle);
-        pointsY[i] = amplitude * ((int)rand() % 3-1);
+        pointsY[i] = h * ((int)rand() % 1000 / 1000);
     }
 }
 
