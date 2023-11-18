@@ -146,6 +146,18 @@ void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoin
         // pointsY[i] = amplitude * sine(angle);
         pointsY[i] = h * ((int)rand() % 1000 / 1000);
     }
+
+    printf("pointsX = {");
+    for (int i = 0; i < numPoints; i++) {
+        printf("%f, ", pointsX[i]);
+    }
+    printf("}\n");
+
+    printf("pointsY = {");
+    for (int i = 0; i < numPoints; i++) {
+        printf("%f, ", pointsY[i]);
+    }
+    printf("}\n");
 }
 
 // Operating system is a C program!
