@@ -191,10 +191,8 @@ int main(const char *args) {
   }
 
   if (1){
-        // Example usage
-    // int x0 = 100, y0 = h-100;   // Start point
-    // int x1 = w/2, y1 = 50;    // Control point
-    // int x2 = w, y2 = h;   // End point
+
+
     int numSegments = 100; // Number of line segments to approximate the curve
     uint32_t color = 0xFF0000; // Red color
     int bold = 1;
@@ -210,31 +208,18 @@ int main(const char *args) {
     // draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     drawQuadraticBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
 
-    // draw_line(x0, y0, x1, y1, color+0x00FF00, 0, 1, 1);
-    // draw_line(x1, y1, x2, y2, color+0x00FF00, 0, 1, 1);
-    
 
-    // int x0 = 100, y0 = 100;   // Start point
-    // int x1 = 150, y1 = 50;    // Control point 1
-    // int x2 = 250, y2 = 150;   // Control point 2
     numPoints = 4;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
-    // int x3 = 300, y3 = 100;   // End point
     color = 0x00FF00; // Green color
-
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     // drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
-    // draw_line(x2, y2, x3, y3, color+0x0000FF, 0, 1, 1);
 
-
-    // float pointsX[] = {100, w/2, w, 300, 350, 400, 450, 500}; // X-coordinates of control points
-    // float pointsY[] = {h, 50, h/2, 100, h/3, 50, 300, 100}; // Y-coordinates of control points
-    // int numPoints = sizeof(pointsX) / sizeof(pointsX[0]);
     numPoints = 16;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     color = 0x0000FF; // Blue color
     // draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
-    drawCubicBezier(pointsX, pointsY, numSegments, numPoints, color, bold, pixel_side);
+    drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color, bold, pixel_side);
   }
   
 
