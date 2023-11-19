@@ -15,10 +15,19 @@ void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32
     }
 }
 
-void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* slopesY, int numPoints, uint32_t color, int bold, int pixel_side){
+void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* slopesY, int numPoints, uint32_t color, int bold, int pixel_side, int power){
+    int x0 = pointsX[0];
+    int y0 = pointsY[0];
     for (int i = 0; i < numPoints; i += 1) {
-        int x0 = pointsX[i];
-        int y0 = pointsY[i];
+        
+        if(power == 3){
+            x0 = pointsX[i];
+            y0 = pointsY[i];
+        } else if (power == 2){
+            x0 = pointsX[2*i];
+            y0 = pointsY[2*i];
+        } 
+
         int x1 = x0 + slopesX[i] * 0.15;
         int y1 = y0 + slopesY[i] * 0.15;
 
@@ -153,6 +162,49 @@ void drawCubicHermite(float* pointsX, float* pointsY, float* slopesX, float* slo
             float t = j / (float)numSegments;
             float x, y;
             cubicHermite(x0, y0, m0x, m0y, x1, y1, m1x, m1y, t, &x, &y);
+
+            prev_pixel_x = pixel_x;
+            prev_pixel_y = pixel_y;
+            pixel_x = (int)x;
+            pixel_y = (int)y;
+
+            if (j > 0) {
+                // Last parameter 1 shows that we use the Bresenham algorithm to draw a straight line.
+                draw_line(prev_pixel_x, prev_pixel_y, pixel_x, pixel_y, color, bold, pixel_side, 1);
+            }
+        }
+    }
+}
+
+void quadraticHermite(float x0, float y0, float mx, float my,
+                      float x1, float y1, float t,
+                      float* x, float* y) {
+    float h0 = 2 * t * t - 3 * t + 1;  // calculate basis function 1
+    float h1 = -4 * t * t + 4 * t;     // calculate basis function 2
+    float h2 = 2 * t * t - t;          // calculate basis function 3
+
+    // P = P0 * h0(s) + P1 * h1(s) + M * h2(s)
+    *x = h0 * x0 + h1 * x1 + h2 * mx;  // multiply and sum all functions together to calculate the point on the curve
+    *y = h0 * y0 + h1 * y1 + h2 * my;
+}
+
+void drawQuadraticHermite(float* pointsX, float* pointsY, float* slopesX, float* slopesY,
+                          int numPoints, int numSegments, uint32_t color, int bold, int pixel_side) {
+    for (int i = 0; i < numPoints - 1; i++) {
+        float x0 = pointsX[i];
+        float y0 = pointsY[i];
+        float mx = slopesX[i];
+        float my = slopesY[i];
+        float x1 = pointsX[i + 1];
+        float y1 = pointsY[i + 1];
+
+        int pixel_x = x0, pixel_y = y0;
+        int prev_pixel_x = x0, prev_pixel_y = y0;
+
+        for (int j = 0; j <= numSegments; j++) {
+            float t = j / (float)numSegments;
+            float x, y;
+            quadraticHermite(x0, y0, mx, my, x1, y1, t, &x, &y);
 
             prev_pixel_x = pixel_x;
             prev_pixel_y = pixel_y;

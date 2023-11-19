@@ -242,11 +242,20 @@ int main(const char *args) {
     float slopesY[numVectors];
 
     numPoints = 2;
+    numVectors = 1;
+    generate_waveform(w*0.9, h*0.9, pointsX, pointsY, numPoints);
+    generate_waveform(w*0.9, h*0.9, slopesX, slopesY, numVectors);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 2);
+    drawQuadraticHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
+
+    color = 0x0000ff;
+
+    numPoints = 2;
     numVectors = numPoints;
     generate_waveform(w*0.9, h*0.9, pointsX, pointsY, numPoints);
     generate_waveform(w*0.9, h*0.9, slopesX, slopesY, numPoints);
     // generate_direction_vector(slopesX, slopesY, numVectors);
-    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 3);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
     numPoints = 5;
@@ -254,9 +263,8 @@ int main(const char *args) {
     generate_waveform(w-100, h-100, pointsX, pointsY, numPoints);
     generate_waveform(w-100, h-100, slopesX, slopesY, numPoints);
     // generate_direction_vector(slopesX, slopesY, numVectors);
-    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 3);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
-
   }
 
   // draw_arrow(0, 0, w/2, h/2, 0xff0000, 1, SIDE, 0.25);
