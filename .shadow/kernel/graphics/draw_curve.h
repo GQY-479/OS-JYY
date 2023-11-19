@@ -26,7 +26,9 @@ void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* 
         } else if (power == 2){
             x0 = pointsX[2*i];
             y0 = pointsY[2*i];
-        } 
+        } else {
+            assert(0);
+        }
 
         int x1 = x0 + slopesX[i] * 0.15;
         int y1 = y0 + slopesY[i] * 0.15;
