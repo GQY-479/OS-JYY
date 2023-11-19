@@ -2,15 +2,7 @@
 // #include <math.h>
 #include "draw_tile.h"
 #include "draw_line.h"
-
-void draw_arrow(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
-    draw_line(x1, y1, x2, y2, color, bold, pixel_side, 1);
-    int dx = x2 - x1, dy = y2 - y1;
-    int x3 = x2 - dx / 3, y3 = y2 - dy / 3;
-    int x4 = x3 - dx / 3, y4 = y3 - dy / 3;
-    draw_line(x2, y2, x4, y4, color+0x00ff00, bold, pixel_side, 1);
-    draw_line(x2, y2, x4 + dy / 3, y4 - dx / 3, color+0x0000ff, bold, pixel_side, 1);
-}
+#include "draw_arrow.h"
 
 // draw feature graphics
 void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32_t color, int bold, int pixel_side){
@@ -20,6 +12,16 @@ void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32
         int x1 = pointsX[i + 1];
         int y1 = pointsY[i + 1];
         draw_line(x0, y0, x1, y1, color, bold, pixel_side, 1);
+    }
+}
+
+void draw_feature_vector(float* pointsX, float* pointsY, int numPoints, uint32_t color, int bold, int pixel_side){
+    for (int i = 0; i < numPoints-1; i += 2) {
+        int x0 = pointsX[i];
+        int y0 = pointsY[i];
+        int x1 = pointsX[i + 1];
+        int y1 = pointsY[i + 1];
+        draw_arrow(x0, y0, x1, y1, color, bold, pixel_side);
     }
 }
 

@@ -238,17 +238,19 @@ int main(const char *args) {
     numPoints = 2;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     generate_waveform(w, h, slopesX, slopesY, numPoints);
+    draw_feature_vector(slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
     numPoints = 5;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
     generate_waveform(w, h, slopesX, slopesY, numPoints);
+    draw_feature_vector(slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
   }
 
-  draw_arrow(0, 0, w/2, h/2, 0xff0000, 1, SIDE);
-  draw_arrow(w/3, h/4, w*4/6, h*5/6, 0xf00000, 1, SIDE);
+  // draw_arrow(0, 0, w/2, h/2, 0xff0000, 1, SIDE);
+  // draw_arrow(w/3, h/4, w*4/6, h*5/6, 0xf00000, 1, SIDE);
   
 
   // splash();
