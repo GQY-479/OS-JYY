@@ -18,7 +18,7 @@ void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32
 void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* slopesY, int numPoints, uint32_t color, int bold, int pixel_side, int power){
     
     for (int i = 0; i < numPoints; i++) {
-        if(power == 2 && i == numPoints-1){
+        if(power == 2 && i >= numPoints-1){
             break;
         }
 
