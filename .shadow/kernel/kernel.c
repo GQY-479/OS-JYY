@@ -246,7 +246,7 @@ int main(const char *args) {
     generate_waveform(w*0.9, h*0.9, pointsX, pointsY, numPoints);
     generate_waveform(w*0.9, h*0.9, slopesX, slopesY, numVectors);
     draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 2);
-    // drawQuadraticHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
+    drawQuadraticHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
     color = 0x0000f0;
 
