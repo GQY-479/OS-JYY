@@ -118,7 +118,25 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
 }
 
 
-void generate_waveform(int w, int h, int* pointsX, int* pointsY, int numPoints) {
+#define PI 3.14159265359
+
+// float sine(float x) {
+//     float result = x;
+//     float numerator = x * x * x;
+//     float denominator = 6.0;
+//     int sign = -1;
+
+//     for (int i = 3; i <= 15; i += 2) {
+//         result += sign * (numerator / denominator);
+//         numerator *= x * x;
+//         denominator *= (i + 1) * (i + 2);
+//         sign *= -1;
+//     }
+
+//     return result;
+// }
+
+void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoints) {
     float stepX = (float)w / (numPoints);
     // float amplitude = h / 2.0;
 
@@ -187,8 +205,8 @@ int main(const char *args) {
 
     int numPoints = 100;  // Number of control points
 
-    int pointsX[numPoints];
-    int pointsY[numPoints];
+    float pointsX[numPoints];
+    float pointsY[numPoints];
 
     numPoints = 3;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
@@ -218,10 +236,10 @@ int main(const char *args) {
     int numPoints = 100;  // Number of control points
     int numVectors = 100; // Number of direction vectors
 
-    int pointsX[numPoints];
-    int pointsY[numPoints];
-    int slopesX[numVectors];
-    int slopesY[numVectors];
+    float pointsX[numPoints];
+    float pointsY[numPoints];
+    float slopesX[numVectors];
+    float slopesY[numVectors];
 
     numPoints = 2;
     numVectors = 1;
