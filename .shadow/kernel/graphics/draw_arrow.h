@@ -9,10 +9,10 @@ void draw_arrow(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pi
     int dx = x2 - x1, dy = y2 - y1;
     dx = -dx; dy = -dy;
     // rotate 30 degree
-    int dx1 = sqrt3/2 * dx - 1/2 * dy;
-    int dy1 = 1/2 * dx + sqrt3/2 * dy;
-    int dx2 = sqrt3/2 * dx + 1/2 * dy;
-    int dy2 = -1/2 * dx + sqrt3/2 * dy;
+    int dx1 = sqrt3*0.5 * dx - 0.5 * dy;
+    int dy1 = 0.5 * dx + sqrt3*0.5 * dy;
+    int dx2 = sqrt3*0.5 * dx + 0.5 * dy;
+    int dy2 = -0.5 * dx + sqrt3*0.5 * dy;
     
     // float len = sqrt(dx*dx + dy*dy);
     dx1 = dx1 / 4; dy1 = dy1 / 4;
