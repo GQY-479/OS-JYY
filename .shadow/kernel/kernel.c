@@ -248,7 +248,7 @@ int main(const char *args) {
   }
 
   draw_arrow(0, 0, w/2, h/2, 0xff0000, 1, SIDE);
-  draw_arrow(w/4, h/4, w/2, h/2, 0xf00000, 1, SIDE);
+  draw_arrow(w/3, h/4, w*4/6, h*5/6, 0xf00000, 1, SIDE);
   
 
   // splash();
