@@ -16,21 +16,16 @@ void draw_feature_graphics(float* pointsX, float* pointsY, int numPoints, uint32
 }
 
 void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* slopesY, int numPoints, uint32_t color, int bold, int pixel_side, int power){
-    for (int i = 0; i < numPoints; ) {
+    
+    for (int i = 0; i < numPoints; i++) {
+        if(power == 2 && i == numPoints-1){
+            break;
+        }
+
         int x0 = pointsX[i];
         int y0 = pointsY[i];
         int x1 = x0 + slopesX[i] * 0.15;
         int y1 = y0 + slopesY[i] * 0.15;
-
-        if(power == 3){
-            i++;
-        } else if (power == 2){
-            i += 2;
-        } else {
-            printf("Error: power should be 2 or 3.\n");
-            assert(0);
-        }
-
         draw_arrow(x0, y0, x1, y1, color, bold, pixel_side, 0.2);
     }
 }
