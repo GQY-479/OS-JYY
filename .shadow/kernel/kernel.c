@@ -118,24 +118,6 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
 }
 
 
-#define PI 3.14159265359
-
-// float sine(float x) {
-//     float result = x;
-//     float numerator = x * x * x;
-//     float denominator = 6.0;
-//     int sign = -1;
-
-//     for (int i = 3; i <= 15; i += 2) {
-//         result += sign * (numerator / denominator);
-//         numerator *= x * x;
-//         denominator *= (i + 1) * (i + 2);
-//         sign *= -1;
-//     }
-
-//     return result;
-// }
-
 void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoints) {
     float stepX = (float)w / (numPoints);
     // float amplitude = h / 2.0;
@@ -149,13 +131,13 @@ void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoin
 
     printf("pointsX = {");
     for (int i = 0; i < numPoints; i++) {
-        printf("%d, ", pointsX[i]);
+        printf("%d, ", (int)pointsX[i]);
     }
     printf("}\n");
 
     printf("pointsY = {");
     for (int i = 0; i < numPoints; i++) {
-        printf("%d, ", pointsY[i]);
+        printf("%d, ", (int)pointsY[i]);
     }
     printf("}\n");
 }
