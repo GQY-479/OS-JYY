@@ -149,13 +149,13 @@ void generate_waveform(int w, int h, int* pointsX, int* pointsY, int numPoints) 
 
     printf("pointsX = {");
     for (int i = 0; i < numPoints; i++) {
-        printf("%f, ", pointsX[i]);
+        printf("%d, ", pointsX[i]);
     }
     printf("}\n");
 
     printf("pointsY = {");
     for (int i = 0; i < numPoints; i++) {
-        printf("%f, ", pointsY[i]);
+        printf("%d, ", pointsY[i]);
     }
     printf("}\n");
 }
