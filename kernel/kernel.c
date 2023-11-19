@@ -118,46 +118,35 @@ void draw_image(const unsigned char* image_data, int image_width, int image_heig
 }
 
 
-#define PI 3.14159265359
-
-// float sine(float x) {
-//     float result = x;
-//     float numerator = x * x * x;
-//     float denominator = 6.0;
-//     int sign = -1;
-
-//     for (int i = 3; i <= 15; i += 2) {
-//         result += sign * (numerator / denominator);
-//         numerator *= x * x;
-//         denominator *= (i + 1) * (i + 2);
-//         sign *= -1;
-//     }
-
-//     return result;
-// }
-
 void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoints) {
-    float stepX = (float)w / (numPoints - 1);
+    float stepX = (float)w / (numPoints);
     // float amplitude = h / 2.0;
 
     for (int i = 0; i < numPoints; i++) {
-        pointsX[i] = i * stepX;
+        pointsX[i] = i * stepX + 0.1*w;
         // float angle = pointsX[i] * (2.0 * PI / w);
         // pointsY[i] = amplitude * sine(angle);
-        pointsY[i] = h * ((int)rand() % 1000 / (float)1000);
+        pointsY[i] = (h * ((int)rand() % 1000 / (float)1000) + 0.1*h);
     }
 
     printf("pointsX = {");
     for (int i = 0; i < numPoints; i++) {
-        printf("%f, ", pointsX[i]);
+        printf("%d, ", (int)pointsX[i]);
     }
     printf("}\n");
 
     printf("pointsY = {");
     for (int i = 0; i < numPoints; i++) {
-        printf("%f, ", pointsY[i]);
+        printf("%d, ", (int)pointsY[i]);
     }
     printf("}\n");
+}
+
+void generate_direction_vector(float* slopseX, float*slopesY, int numVectors) {
+    for (int i = 0; i < numVectors; i++) {
+        slopseX[i] = (int)rand() % 1000 / (float)1000;
+        slopesY[i] = (int)rand() % 1000 / (float)1000;
+    }
 }
 
 // Operating system is a C program!
@@ -190,9 +179,7 @@ int main(const char *args) {
     draw_ellipse(w/2, h/2, 200, 100, 0x00ff00);
   }
 
-  if (1){
-
-
+  if (0){
     int numSegments = 100; // Number of line segments to approximate the curve
     uint32_t color = 0xFF0000; // Red color
     int bold = 1;
@@ -221,8 +208,50 @@ int main(const char *args) {
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x0FFF00, bold, pixel_side);
   }
-  
 
+  if(1){
+    int numSegments = 100; // Number of line segments to approximate the curve
+    uint32_t color = 0xFF0000; // Red color
+    int bold = 1;
+    int pixel_side = SIDE;
+
+    int numPoints = 100;  // Number of control points
+    int numVectors = 100; // Number of direction vectors
+
+    float pointsX[numPoints];
+    float pointsY[numPoints];
+    float slopesX[numVectors];
+    float slopesY[numVectors];
+
+    numPoints = 2;
+    numVectors = 1;
+    generate_waveform(w*0.9, h*0.9, pointsX, pointsY, numPoints);
+    generate_waveform(w*0.9, h*0.9, slopesX, slopesY, numVectors);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, 0xFFA6C6, bold, pixel_side, 2);
+    drawQuadraticHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, 0xFFFF00, bold, pixel_side);
+
+    color = 0x00ff00;
+
+    numPoints = 2;
+    numVectors = numPoints;
+    generate_waveform(w*0.9, h*0.9, pointsX, pointsY, numPoints);
+    generate_waveform(w*0.9, h*0.9, slopesX, slopesY, numVectors);
+    // generate_direction_vector(slopesX, slopesY, numVectors);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, 0xFFEE91, bold, pixel_side, 3);
+    drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
+
+    color = 0x0000ff;
+    numPoints = 5;
+    numVectors = numPoints;
+    generate_waveform(w-100, h-100, pointsX, pointsY, numPoints);
+    generate_waveform(w-100, h-100, slopesX, slopesY, numVectors);
+    // generate_direction_vector(slopesX, slopesY, numVectors);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 3);
+    drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
+  }
+
+  // draw_arrow(0, 0, w/2, h/2, 0xff0000, 1, SIDE, 0.25);
+  // draw_arrow(w/3, h/4, w*4/6, h*5/6, 0xf00000, 1, SIDE, 0.25);
   // splash();
 
   puts("Press any key to see its key code...\n");
