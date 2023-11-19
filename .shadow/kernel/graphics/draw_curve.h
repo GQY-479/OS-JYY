@@ -19,6 +19,8 @@ void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* 
     for (int i = 0; i < numPoints; ) {
         int x0 = pointsX[i];
         int y0 = pointsY[i];
+        int x1 = x0 + slopesX[i] * 0.15;
+        int y1 = y0 + slopesY[i] * 0.15;
 
         if(power == 3){
             i++;
@@ -28,9 +30,6 @@ void draw_feature_vector(float* pointsX, float* pointsY, float* slopesX, float* 
             printf("Error: power should be 2 or 3.\n");
             assert(0);
         }
-
-        int x1 = x0 + slopesX[i] * 0.15;
-        int y1 = y0 + slopesY[i] * 0.15;
 
         draw_arrow(x0, y0, x1, y1, color, bold, pixel_side, 0.2);
     }

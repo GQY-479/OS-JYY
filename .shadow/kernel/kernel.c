@@ -248,7 +248,7 @@ int main(const char *args) {
     draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 2);
     // drawQuadraticHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
-    color = 0x0000ff;
+    color = 0x00000f;
 
     numPoints = 2;
     numVectors = numPoints;
@@ -258,6 +258,7 @@ int main(const char *args) {
     draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side, 3);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
+    color = 0x0000ff;
     numPoints = 5;
     numVectors = numPoints;
     generate_waveform(w-100, h-100, pointsX, pointsY, numPoints);
