@@ -4,9 +4,10 @@
 
 #define sqrt3 1.732
 
-void draw_arrow(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side) {
+void draw_arrow(int x1, int y1, int x2, int y2, uint32_t color, int bold, int pixel_side, float scale) {
     draw_line(x1, y1, x2, y2, color, bold, pixel_side, 1);
     int dx = x2 - x1, dy = y2 - y1;
+    dx = dx * scale; dy = dy * scale;
     dx = -dx; dy = -dy;
     // rotate 30 degree
     int dx1 = sqrt3*0.5 * dx - 0.5 * dy;
