@@ -222,7 +222,7 @@ int main(const char *args) {
     drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x0FFF00, bold, pixel_side);
   }
 
-  if(0){
+  if(1){
     int numSegments = 100; // Number of line segments to approximate the curve
     uint32_t color = 0xFF0000; // Red color
     int bold = 1;
