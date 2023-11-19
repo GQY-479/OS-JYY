@@ -21,7 +21,7 @@ void draw_feature_vector(float* pointsX, float* pointsY, int numPoints, uint32_t
         int y0 = pointsY[i];
         int x1 = pointsX[i + 1];
         int y1 = pointsY[i + 1];
-        draw_arrow(x0, y0, x1, y1, color, bold, pixel_side, 20);
+        draw_arrow(x0, y0, x1, y1, color, bold, pixel_side, 0.2);
     }
 }
 
