@@ -244,14 +244,16 @@ int main(const char *args) {
     numPoints = 2;
     numVectors = numPoints;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
-    generate_direction_vector(slopesX, slopesY, numVectors);
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    // generate_direction_vector(slopesX, slopesY, numVectors);
     draw_feature_vector(slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
     numPoints = 5;
     numVectors = numPoints;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
-    generate_direction_vector(slopesX, slopesY, numVectors);
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    // generate_direction_vector(slopesX, slopesY, numVectors);
     draw_feature_vector(slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
