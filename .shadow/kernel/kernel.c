@@ -190,7 +190,7 @@ int main(const char *args) {
     draw_ellipse(w/2, h/2, 200, 100, 0x00ff00);
   }
 
-  if (1){
+  if (0){
 
 
     int numSegments = 100; // Number of line segments to approximate the curve
@@ -220,6 +220,31 @@ int main(const char *args) {
     color = 0x0000FF; // Blue color
     draw_feature_graphics(pointsX, pointsY, numPoints, color, bold, pixel_side);
     drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x0FFF00, bold, pixel_side);
+  }
+
+  if(1){
+    int numSegments = 100; // Number of line segments to approximate the curve
+    uint32_t color = 0xFF0000; // Red color
+    int bold = 1;
+    int pixel_side = SIDE;
+
+    int numPoints = 100;  // Number of control points
+
+    float pointsX[numPoints];
+    float pointsY[numPoints];
+    float slopesX[numPoints];
+    float slopesY[numPoints];
+
+    numPoints = 2;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    generate_waveform(w, h, slopesX, slopesY, numPoints);
+    drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
+
+    numPoints = 5;
+    generate_waveform(w, h, pointsX, pointsY, numPoints);
+    generate_waveform(w, h, slopesX, slopesY, numPoints);
+    drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
+
   }
   
 

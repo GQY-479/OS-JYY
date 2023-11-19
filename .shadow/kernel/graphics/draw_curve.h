@@ -105,3 +105,52 @@ void drawCubicBezier(float* pointsX, float* pointsY, int numPoints, int numSegme
         }
     }
 }
+
+
+void cubicHermite(float x0, float y0, float m0x, float m0y,
+                  float x1, float y1, float m1x, float m1y,
+                  float t, float* x, float* y) {
+    float h00 = 2 * t * t * t - 3 * t * t + 1; // calculate basis function 1
+    float h10 = -2 * t * t * t + 3 * t * t; // calculate basis function 2
+    float h01 = t * t * t - 2 * t * t + t; // calculate basis function 3
+    float h11 = t * t * t - t * t; // calculate basis function 4
+
+    // P=P1* h1(s)+ P2*h2(s)+ T1*h3(s)+T2*h4(s)
+    *x = h00 * x0 + h10 * x1 + h01 * m0x + h11 * m1x; // multiply and sum all functions together to calculate the point on the curve
+    *y = h00 * y0 + h10 * y1 + h01 * m0y + h11 * m1y;
+}
+
+// Function to draw a smooth Hermite curve using segment-wise cubic Hermite curves
+void drawCubicHermite(float* pointsX, float* pointsY, float* slopesX, float* slopesY,
+                      int numPoints, int numSegments, uint32_t color, int bold, int pixel_side) {
+
+    for (int i = 0; i < numPoints - 1; i += 1) {
+        float x0 = pointsX[i];
+        float y0 = pointsY[i];
+        float m0x = slopesX[i];
+        float m0y = slopesY[i];
+        float x1 = pointsX[i + 1];
+        float y1 = pointsY[i + 1];
+        float m1x = slopesX[i + 1];
+        float m1y = slopesY[i + 1];
+
+        int pixel_x = x0, pixel_y = y0;
+        int prev_pixel_x = x0, prev_pixel_y = y0;
+
+        for (int j = 0; j <= numSegments; j++) {
+            float t = j / (float)numSegments;
+            float x, y;
+            cubicHermite(x0, y0, m0x, m0y, x1, y1, m1x, m1y, t, &x, &y);
+
+            prev_pixel_x = pixel_x;
+            prev_pixel_y = pixel_y;
+            pixel_x = (int)x;
+            pixel_y = (int)y;
+
+            if (j > 0) {
+                // Last parameter 1 shows that we use the Bresenham algorithm to draw a straight line.
+                draw_line(prev_pixel_x, prev_pixel_y, pixel_x, pixel_y, color, bold, pixel_side, 1);
+            }
+        }
+    }
+}
