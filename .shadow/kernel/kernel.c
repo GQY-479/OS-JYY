@@ -144,7 +144,7 @@ void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoin
         pointsX[i] = i * stepX + 0.1*w;
         // float angle = pointsX[i] * (2.0 * PI / w);
         // pointsY[i] = amplitude * sine(angle);
-        pointsY[i] = (int)(h * ((int)rand() % 1000 / (float)1000) + 0.1*h);
+        pointsY[i] = (h * ((int)rand() % 1000 / (float)1000) + 0.1*h);
     }
 
     printf("pointsX = {");
@@ -255,7 +255,7 @@ int main(const char *args) {
     generate_waveform(w*0.9, h*0.9, pointsX, pointsY, numPoints);
     generate_waveform(w*0.9, h*0.9, slopesX, slopesY, numVectors);
     // generate_direction_vector(slopesX, slopesY, numVectors);
-    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, 0x57FF8B, bold, pixel_side, 3);
+    draw_feature_vector(pointsX, pointsY, slopesX, slopesY, numPoints, 0xFFEE91, bold, pixel_side, 3);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
     color = 0x0000ff;
