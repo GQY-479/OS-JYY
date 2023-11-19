@@ -222,7 +222,7 @@ int main(const char *args) {
     drawCubicBezier(pointsX, pointsY, numPoints, numSegments, color+0x0FFF00, bold, pixel_side);
   }
 
-  if(1){
+  if(0){
     int numSegments = 100; // Number of line segments to approximate the curve
     uint32_t color = 0xFF0000; // Red color
     int bold = 1;
@@ -246,6 +246,8 @@ int main(const char *args) {
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
   }
+
+  draw_arrow(0, 0, w/2, h/2, 0xffffff, 1, SIDE);
   
 
   // splash();
