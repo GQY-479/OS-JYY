@@ -31,6 +31,24 @@ void print_int(int num) {
   }
 }
 
+void print_float(float num) {
+  int int_part = (int)num;
+  float fractional_part = num - int_part;
+
+  // Print the integer part
+  print_int(int_part);
+  putch('.'); // Print the decimal point
+
+  // Print the fractional part
+  int decimal_places = 6; // Assuming 6 decimal places
+  for (int i = 0; i < decimal_places; i++) {
+    fractional_part *= 10;
+    int digit = (int)fractional_part;
+    putch(digit + '0');
+    fractional_part -= digit;
+  }
+}
+
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
@@ -51,7 +69,12 @@ int printf(const char *fmt, ...) {
           count++;
         }
         count++;
+      } else if (*fmt == 'f') {
+        // float num = va_arg(args, double); // Assuming the argument is a double
+        // print_float(num);
+        // count++;        
       }
+      
     } else {
       putch(*fmt);
       count++;
