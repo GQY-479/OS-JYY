@@ -160,6 +160,13 @@ void generate_waveform(int w, int h, float* pointsX, float* pointsY, int numPoin
     printf("}\n");
 }
 
+void generate_direction_vector(float* slopseX, float*slopesY, int numVectors) {
+    for (int i = 0; i < numVectors; i++) {
+        slopseX[i] = (int)rand() % 1000 / (float)1000;
+        slopesY[i] = (int)rand() % 1000 / (float)1000;
+    }
+}
+
 // Operating system is a C program!
 int main(const char *args) {
   ioe_init();
@@ -191,8 +198,6 @@ int main(const char *args) {
   }
 
   if (0){
-
-
     int numSegments = 100; // Number of line segments to approximate the curve
     uint32_t color = 0xFF0000; // Red color
     int bold = 1;
@@ -229,21 +234,24 @@ int main(const char *args) {
     int pixel_side = SIDE;
 
     int numPoints = 100;  // Number of control points
+    int numVectors = 100; // Number of direction vectors
 
     float pointsX[numPoints];
     float pointsY[numPoints];
-    float slopesX[numPoints];
-    float slopesY[numPoints];
+    float slopesX[numVectors];
+    float slopesY[numVectors];
 
     numPoints = 2;
+    numVectors = numPoints;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
-    generate_waveform(w, h, slopesX, slopesY, numPoints);
+    generate_direction_vector(slopesX, slopesY, numVectors);
     draw_feature_vector(slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
     numPoints = 5;
+    numVectors = numPoints;
     generate_waveform(w, h, pointsX, pointsY, numPoints);
-    generate_waveform(w, h, slopesX, slopesY, numPoints);
+    generate_direction_vector(slopesX, slopesY, numVectors);
     draw_feature_vector(slopesX, slopesY, numPoints, color+0x00ff00, bold, pixel_side);
     drawCubicHermite(pointsX, pointsY, slopesX, slopesY, numPoints, numSegments, color, bold, pixel_side);
 
